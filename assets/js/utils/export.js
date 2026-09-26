@@ -7,7 +7,10 @@ export function sessionsToText(sessions) {
   const average = total / sessions.length;
 
   return [
-    ...sessions.map((session, index) => `#${index + 1}  ${formatDuration(session.duration)}`),
+    ...sessions.map((session, index) => {
+      const note = session.note?.trim() ? ` — ${session.note.trim()}` : '';
+      return `#${index + 1}  ${formatDuration(session.duration)}${note}`;
+    }),
     '',
     `Total: ${formatDuration(total)}`,
     `Rata-rata: ${formatDuration(average)}`,
@@ -18,9 +21,10 @@ export function downloadCsv(sessions, filename = 'chain-stopwatch.csv') {
   if (!sessions.length) return false;
 
   const rows = [
-    ['session', 'duration_ms', 'duration', 'ended_at'],
+    ['session', 'description', 'duration_ms', 'duration', 'ended_at'],
     ...sessions.map((session, index) => [
       index + 1,
+      session.note ?? '',
       session.duration,
       formatDuration(session.duration),
       new Date(session.endedAt).toISOString(),

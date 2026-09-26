@@ -5,9 +5,11 @@ Stopwatch berantai berbasis static HTML, CSS, dan JavaScript. Dirancang agar rin
 ## Cara kerja
 
 1. Tekan **Start** untuk memulai sesi pertama.
-2. Tekan **Stop & Next** untuk menyimpan sesi aktif dan langsung memulai sesi berikutnya.
-3. Tekan **Finish All** untuk menyimpan sesi terakhir dan menghentikan stopwatch.
-4. Hasil tersimpan lokal di browser dan dapat disalin atau diekspor ke CSV.
+2. Isi **Keterangan sesi** jika ingin memberi nama atau catatan pada waktu yang sedang berjalan.
+3. Tekan **Stop & Next** untuk menyimpan waktu beserta keterangannya dan langsung memulai sesi berikutnya.
+4. Tekan **Finish All** untuk menyimpan sesi terakhir dan menghentikan stopwatch.
+5. Keterangan sesi yang sudah tersimpan masih dapat diedit dari riwayat.
+6. Hasil beserta keterangannya tersimpan lokal di browser dan dapat disalin atau diekspor ke CSV.
 
 Pada transisi **Stop & Next**, sesi yang selesai dan sesi baru memakai timestamp transisi yang sama sehingga tidak ada celah waktu buatan di antara keduanya.
 
@@ -83,7 +85,7 @@ Nomor versi aplikasi berada di:
 
 ```js
 // assets/js/config.js
-version: '2.0.0'
+version: '2.1.0'
 ```
 
 Saat membuat perubahan fitur, update nilai tersebut dan catat perubahannya di `CHANGELOG.md`.

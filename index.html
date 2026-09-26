@@ -39,6 +39,18 @@
         <span data-timer-clock>00:00</span><span class="timer__milliseconds" data-timer-ms>.000</span>
       </div>
 
+      <label class="active-note">
+        <span>Keterangan sesi</span>
+        <input
+          type="text"
+          maxlength="160"
+          placeholder="Contoh: Percobaan 1, ronde final, loading halaman..."
+          data-active-note
+          autocomplete="off"
+        >
+        <small>Catatan ini ikut tersimpan saat sesi dihentikan.</small>
+      </label>
+
       <div class="controls">
         <button class="button button--primary" type="button" data-action="start">Start</button>
         <button class="button" type="button" data-action="next" disabled>Stop &amp; Next</button>

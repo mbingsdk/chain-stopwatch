@@ -609,3 +609,119 @@ button:disabled {
     transition: none !important;
   }
 }
+
+/* Session descriptions */
+.active-note {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 7px 12px;
+  margin: -2px 0 22px;
+}
+
+.active-note > span {
+  grid-column: 1 / -1;
+  color: var(--text-soft);
+  font-size: 11px;
+  font-weight: 720;
+  letter-spacing: 0.02em;
+}
+
+.active-note input,
+.session-note input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--text);
+  font: inherit;
+  outline: none;
+  transition: border-color 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
+}
+
+.active-note input {
+  grid-column: 1 / -1;
+  min-height: 46px;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.active-note input::placeholder,
+.session-note input::placeholder {
+  color: #626a76;
+}
+
+.active-note input:focus,
+.session-note input:focus {
+  border-color: rgba(255, 122, 26, 0.5);
+  background: rgba(255, 122, 26, 0.035);
+  box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.07);
+}
+
+.active-note small {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.session-row {
+  min-height: 86px;
+}
+
+.session-row__main {
+  display: grid;
+  gap: 8px;
+}
+
+.session-row__time strong,
+.session-row__time span {
+  display: block;
+}
+
+.session-row__time strong {
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.025em;
+}
+
+.session-row__time span {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.session-note {
+  display: block;
+  min-width: 0;
+}
+
+.session-note input {
+  height: 32px;
+  padding: 0 10px;
+  font-size: 11px;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@media (max-width: 620px) {
+  .active-note {
+    margin-bottom: 18px;
+  }
+
+  .session-row {
+    align-items: start;
+    padding-top: 13px;
+    padding-bottom: 13px;
+  }
+}

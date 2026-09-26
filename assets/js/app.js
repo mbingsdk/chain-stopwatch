@@ -9,6 +9,7 @@ const elements = {
   timerClock: document.querySelector('[data-timer-clock]'),
   timerMs: document.querySelector('[data-timer-ms]'),
   sessionLabel: document.querySelector('[data-session-label]'),
+  activeNote: document.querySelector('[data-active-note]'),
   status: document.querySelector('[data-status]'),
   start: document.querySelector('[data-action="start"]'),
   next: document.querySelector('[data-action="next"]'),
@@ -46,6 +47,10 @@ function bindEvents() {
   elements.next.addEventListener('click', () => stopwatch.stopAndNext());
   elements.finish.addEventListener('click', () => stopwatch.finish());
 
+  elements.activeNote.addEventListener('input', (event) => {
+    stopwatch.setActiveNote(event.target.value);
+  });
+
   elements.reset.addEventListener('click', () => {
     const hasAnything = latestState.running || latestState.sessions.length > 0;
     if (hasAnything && !window.confirm('Hapus semua sesi dan reset stopwatch?')) return;
@@ -57,6 +62,22 @@ function bindEvents() {
     const button = event.target.closest('[data-delete-session]');
     if (!button) return;
     stopwatch.deleteSession(button.dataset.deleteSession);
+  });
+
+  elements.history.addEventListener('change', (event) => {
+    const input = event.target.closest('[data-session-note]');
+    if (!input) return;
+
+    if (stopwatch.updateSessionNote(input.dataset.sessionNote, input.value)) {
+      showToast('Keterangan sesi diperbarui');
+    }
+  });
+
+  elements.history.addEventListener('keydown', (event) => {
+    const input = event.target.closest('[data-session-note]');
+    if (!input || event.key !== 'Enter') return;
+    event.preventDefault();
+    input.blur();
   });
 
   elements.copy.addEventListener('click', copyResults);
@@ -109,6 +130,10 @@ function render(state) {
   elements.copy.disabled = state.sessions.length === 0;
   elements.csv.disabled = state.sessions.length === 0;
 
+  if (document.activeElement !== elements.activeNote) {
+    elements.activeNote.value = state.activeNote ?? '';
+  }
+
   if (!state.running) renderTimer(0);
 
   renderHistory(state.sessions);
@@ -156,8 +181,21 @@ function renderHistory(sessions) {
       <article class="session-row">
         <span class="session-row__number">${number}</span>
         <div class="session-row__main">
-          <strong>${formatDuration(session.duration)}</strong>
-          <span>Selesai ${formatEndedAt(session.endedAt, APP_CONFIG.locale)}</span>
+          <div class="session-row__time">
+            <strong>${formatDuration(session.duration)}</strong>
+            <span>Selesai ${formatEndedAt(session.endedAt, APP_CONFIG.locale)}</span>
+          </div>
+          <label class="session-note">
+            <span class="sr-only">Keterangan sesi ${sessionNumber}</span>
+            <input
+              type="text"
+              maxlength="160"
+              value="${escapeHtml(session.note ?? '')}"
+              placeholder="Tambahkan keterangan..."
+              data-session-note="${escapeHtml(session.id)}"
+              aria-label="Keterangan sesi ${sessionNumber}"
+            >
+          </label>
         </div>
         <span class="session-row__seconds">${(session.duration / 1000).toFixed(3)} s</span>
         <button class="icon-button" type="button" data-delete-session="${escapeHtml(session.id)}" aria-label="Hapus sesi ${sessionNumber}" title="Hapus sesi">

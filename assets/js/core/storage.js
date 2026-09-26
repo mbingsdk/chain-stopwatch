@@ -17,6 +17,7 @@ export class StopwatchStorage {
           .map(normalizeSession),
         running: Boolean(parsed.running),
         startedAt: Number.isFinite(parsed.startedAt) ? parsed.startedAt : null,
+        activeNote: normalizeNote(parsed.activeNote),
       };
     } catch {
       return null;
@@ -28,6 +29,7 @@ export class StopwatchStorage {
       sessions: state.sessions,
       running: state.running,
       startedAt: state.startedAt,
+      activeNote: state.activeNote,
     }));
   }
 
@@ -49,5 +51,10 @@ function normalizeSession(session) {
     id: session.id,
     duration: Math.max(0, Math.floor(session.duration)),
     endedAt: Math.floor(session.endedAt),
+    note: normalizeNote(session.note),
   };
+}
+
+function normalizeNote(value) {
+  return typeof value === 'string' ? value.slice(0, 160) : '';
 }

@@ -18,9 +18,10 @@ export class ChainStopwatch {
 
   snapshot() {
     return {
-      sessions: [...this.state.sessions],
+      sessions: this.state.sessions.map((session) => ({ ...session })),
       running: this.state.running,
       startedAt: this.state.startedAt,
+      activeNote: this.state.activeNote,
       elapsed: this.elapsed(),
     };
   }
@@ -44,6 +45,7 @@ export class ChainStopwatch {
 
     this.recordSession(now);
     this.state.startedAt = now;
+    this.state.activeNote = '';
     this.state.running = true;
     this.commit();
     return true;
@@ -55,6 +57,28 @@ export class ChainStopwatch {
     this.recordSession(now);
     this.state.running = false;
     this.state.startedAt = null;
+    this.state.activeNote = '';
+    this.commit();
+    return true;
+  }
+
+  setActiveNote(note) {
+    const nextNote = normalizeNote(note);
+    if (nextNote === this.state.activeNote) return false;
+
+    this.state.activeNote = nextNote;
+    this.persist();
+    return true;
+  }
+
+  updateSessionNote(id, note) {
+    const session = this.state.sessions.find((item) => item.id === id);
+    if (!session) return false;
+
+    const nextNote = normalizeNote(note);
+    if (session.note === nextNote) return false;
+
+    session.note = nextNote;
     this.commit();
     return true;
   }
@@ -81,6 +105,7 @@ export class ChainStopwatch {
       id: createId(),
       duration,
       endedAt: now,
+      note: this.state.activeNote,
     });
   }
 
@@ -104,7 +129,12 @@ function createInitialState() {
     sessions: [],
     running: false,
     startedAt: null,
+    activeNote: '',
   };
+}
+
+function normalizeNote(value) {
+  return typeof value === 'string' ? value.slice(0, 160) : '';
 }
 
 function createId() {
