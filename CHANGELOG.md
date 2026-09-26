@@ -2,6 +2,12 @@
 
 Semua perubahan penting pada Chain Stopwatch dicatat di file ini.
 
+## 2.1.1 - 2026-09-26
+
+### Fixed
+- Menambahkan cache-busting pada CSS dan seluruh JavaScript module agar browser tidak memakai asset versi lama setelah GitHub Pages redeploy.
+- Menambahkan feedback saat keterangan sesi aktif selesai diedit.
+
 ## 2.1.0 - 2026-09-26
 
 ### Added

@@ -1,4 +1,4 @@
-import { formatDuration } from './time.js';
+import { formatDuration } from './time.js?v=2.1.1';
 
 export function sessionsToText(sessions) {
   if (!sessions.length) return 'Belum ada sesi.';

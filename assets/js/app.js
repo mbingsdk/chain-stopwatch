@@ -1,9 +1,9 @@
-import { APP_CONFIG } from './config.js';
-import { StopwatchStorage } from './core/storage.js';
-import { ChainStopwatch } from './core/stopwatch.js';
-import { getStats } from './core/stats.js';
-import { downloadCsv, sessionsToText } from './utils/export.js';
-import { formatDuration, formatEndedAt, splitDuration } from './utils/time.js';
+import { APP_CONFIG } from './config.js?v=2.1.1';
+import { StopwatchStorage } from './core/storage.js?v=2.1.1';
+import { ChainStopwatch } from './core/stopwatch.js?v=2.1.1';
+import { getStats } from './core/stats.js?v=2.1.1';
+import { downloadCsv, sessionsToText } from './utils/export.js?v=2.1.1';
+import { formatDuration, formatEndedAt, splitDuration } from './utils/time.js?v=2.1.1';
 
 const elements = {
   timerClock: document.querySelector('[data-timer-clock]'),
@@ -49,6 +49,10 @@ function bindEvents() {
 
   elements.activeNote.addEventListener('input', (event) => {
     stopwatch.setActiveNote(event.target.value);
+  });
+
+  elements.activeNote.addEventListener('change', (event) => {
+    if (event.target.value.trim()) showToast('Keterangan sesi aktif tersimpan');
   });
 
   elements.reset.addEventListener('click', () => {
