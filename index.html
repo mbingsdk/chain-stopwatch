@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0c0e">
+  <meta name="description" content="Chain Stopwatch, stopwatch berantai untuk mencatat sesi secara terus-menerus tanpa jeda antar timer.">
+  <meta name="color-scheme" content="dark">
+  <title>Chain Stopwatch</title>
+  <link rel="stylesheet" href="./assets/css/main.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand__mark" aria-hidden="true">CS</div>
+        <div class="brand__text">
+          <strong>Chain Stopwatch</strong>
+          <span>Stop satu sesi, lanjut otomatis ke sesi berikutnya.</span>
+        </div>
+      </div>
+
+      <div class="status" data-status data-state="idle" aria-live="polite">
+        <span class="status__dot" aria-hidden="true"></span>
+        <span>Idle</span>
+      </div>
+    </header>
+
+    <section class="timer-panel" aria-label="Stopwatch">
+      <div class="timer-panel__meta">
+        <p class="eyebrow" data-session-label>Siap memulai sesi pertama</p>
+        <div class="keyboard-hint" aria-label="Shortcut keyboard">
+          <span class="key">Space</span><span>Next</span>
+          <span class="key">Esc</span><span>Finish</span>
+        </div>
+      </div>
+
+      <div class="timer" aria-label="Waktu berjalan" aria-live="off">
+        <span data-timer-clock>00:00</span><span class="timer__milliseconds" data-timer-ms>.000</span>
+      </div>
+
+      <div class="controls">
+        <button class="button button--primary" type="button" data-action="start">Start</button>
+        <button class="button" type="button" data-action="next" disabled>Stop &amp; Next</button>
+        <button class="button button--danger" type="button" data-action="finish" disabled>Finish All</button>
+        <button class="button button--ghost" type="button" data-action="reset">Reset</button>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <section class="panel" aria-labelledby="history-title">
+        <header class="panel__header">
+          <h2 id="history-title">Riwayat sesi</h2>
+          <span data-history-count>0 sesi</span>
+        </header>
+        <div class="session-list" data-history></div>
+      </section>
+
+      <aside>
+        <section class="panel" aria-labelledby="stats-title">
+          <header class="panel__header">
+            <h2 id="stats-title">Ringkasan</h2>
+            <span>Realtime</span>
+          </header>
+
+          <div class="stats-grid">
+            <div class="stat">
+              <span>Total sesi</span>
+              <strong data-stat="count">0</strong>
+            </div>
+            <div class="stat">
+              <span>Total waktu</span>
+              <strong data-stat="total">00:00.000</strong>
+            </div>
+            <div class="stat">
+              <span>Rata-rata</span>
+              <strong data-stat="average">00:00.000</strong>
+            </div>
+            <div class="stat">
+              <span>Tercepat</span>
+              <strong data-stat="fastest">00:00.000</strong>
+            </div>
+          </div>
+        </section>
+
+        <div class="side-actions">
+          <button class="button" type="button" data-action="copy" disabled>Copy hasil</button>
+          <button class="button" type="button" data-action="csv" disabled>Export CSV</button>
+        </div>
+      </aside>
+    </section>
+
+    <footer class="footer">
+      <p>Data hanya tersimpan di browser ini.</p>
+      <p>Chain Stopwatch <span data-version></span></p>
+    </footer>
+  </main>
+
+  <div class="toast" data-toast hidden role="status" aria-live="polite"></div>
+
+  <script type="module" src="./assets/js/app.js"></script>
+</body>
+</html>
